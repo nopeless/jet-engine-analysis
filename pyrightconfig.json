@@ -1,0 +1,4 @@
+{
+    "reportConstantRedefinition": false,
+    "reportUnusedImport": "warning"
+}
