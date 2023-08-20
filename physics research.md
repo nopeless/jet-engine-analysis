@@ -1,7 +1,35 @@
 <style>
+* {
+    font-family: "Times New Roman", Times, serif;
+}
+
+h1 {
+    font-size: 50px !important;
+    text-align: center;
+}
+
+h2 {
+    font-size: 40px !important;
+}
+
+h3 {
+    font-size: 30px !important;
+}
+
+* {
+    font-size: 20px !important;
+}
+
+p {
+    text-indent: 2em;
+    line-height: 2;
+}
+
 img {
-    width: 50%;
-    display: inline;
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 </style>
@@ -103,11 +131,11 @@ Using these variables, it is possible to generate a graph of any two engine vari
 
 ### Data collection
 
-I have downloaded and parsed *Aircraft database*, which is a global database of aircraft and engine models (https://github.com/jbroutier/aircraft-database). It has more than 5,200 aircraft models and 4,300 engine models. The parsing algorithm can be found in `src/db.py`. The data is stored in `data/*.json` as JSON files.
+The data has already downloaded and parsed *Aircraft database*, which is a global database of aircraft and engine models (https://github.com/jbroutier/aircraft-database). It has more than 5,200 aircraft models and 4,300 engine models. The parsing algorithm can be found in `src/db.py`. The data is stored in `data/*.json` as JSON files.
 
 ### Plotting and analysis
 
-I have used `matplotlib` to plot the data. After plotting the data, the graph is overlaid on top of a heatimage of some theoretical value given the two parameters used to plot the x and y axis. Heatmaps are constructed using HSV and manipulating the hue while fixing saturation and value to 1. The pixel data is rendered on the final image using PIL (python pillow library). The plotting algorithm can be found in `src/plot.py`.
+`matplotlib` has beed used to plot the data. After plotting the data, the graph is overlaid on top of a heatimage of some theoretical value given the two parameters used to plot the x and y axis. Heatmaps are constructed using HSV and manipulating the hue while fixing saturation and value to 1. The pixel data is rendered on the final image using PIL (python pillow library). The plotting algorithm can be found in `src/plot.py`.
 
 # Results
 
@@ -117,30 +145,44 @@ Due to my lack of expertise in the field of thermodynamics, I am unable to prope
 
 ---
 
-# Compresser ratio vs. x with various engine parameters
+## Compresser ratio vs. x with various engine parameters
 
-![plot](./plots/plot%20of%20compresser_ratio-weight%20bg-efficiency.png)
-![plot](./plots/plot%20of%20compresser_ratio-weight%20bg-heat_flowrate.png)
-![plot](./plots/plot%20of%20compresser_ratio-weight%20bg-mass_flowrate.png)
-![plot](./plots/plot%20of%20compresser_ratio-weight%20bg-power.png)
-![plot](./plots/plot%20of%20compresser_ratio-weight%20bg-thrust.png)
+![plot](https://github.com/nopeless/jet-engine-analysis/blob/main/plots/plot%20of%20compresser_ratio-weight%20bg-efficiency.png?raw=true)
+![plot](https://github.com/nopeless/jet-engine-analysis/blob/main/plots/plot%20of%20compresser_ratio-weight%20bg-heat_flowrate.png?raw=true)
+![plot](https://github.com/nopeless/jet-engine-analysis/blob/main/plots/plot%20of%20compresser_ratio-weight%20bg-mass_flowrate.png?raw=true)
+![plot](https://github.com/nopeless/jet-engine-analysis/blob/main/plots/plot%20of%20compresser_ratio-weight%20bg-power.png?raw=true)
+![plot](https://github.com/nopeless/jet-engine-analysis/blob/main/plots/plot%20of%20compresser_ratio-weight%20bg-thrust.png?raw=true)
 
 Compressor ratio has minimal effect on all dependent variables except heatflow
 
 ---
-# Inlet area vs. x with various engine parameters
+## Inlet area vs. x with various engine parameters
 
-![plot](./plots/plot%20of%20inlet_area-compresser_ratio%20bg-efficiency.png)
+![plot](https://github.com/nopeless/jet-engine-analysis/blob/main/plots/plot%20of%20inlet_area-compresser_ratio%20bg-efficiency.png?raw=true)
 
 > A void in the middle can be seen, where inlet area of 4 and compresser ratio of around 363 does not exist
 
-![plot](./plots/plot%20of%20inlet_area-compresser_ratio%20bg-power.png)
-![plot](./plots/plot%20of%20inlet_area-compresser_ratio%20bg-thrust.png)
+![plot](https://github.com/nopeless/jet-engine-analysis/blob/main/plots/plot%20of%20inlet_area-compresser_ratio%20bg-power.png?raw=true)
+![plot](https://github.com/nopeless/jet-engine-analysis/blob/main/plots/plot%20of%20inlet_area-compresser_ratio%20bg-thrust.png?raw=true)
 
 > In power and thrust plots, many passenger aircrafts are on the green area
 
-![plot](./plots/plot%20of%20inlet_area-weight%20bg-efficiency.png)
-![plot](./plots/plot%20of%20inlet_area-weight%20bg-heat_flowrate.png)
-![plot](./plots/plot%20of%20inlet_area-weight%20bg-mass_flowrate.png)
-![plot](./plots/plot%20of%20inlet_area-weight%20bg-power.png)
-![plot](./plots/plot%20of%20inlet_area-weight%20bg-thrust.png)
+---
+## Inlet area vs. weight with efficiency
+
+![plot](https://github.com/nopeless/jet-engine-analysis/blob/main/plots/plot%20of%20inlet_area-weight%20bg-efficiency.png?raw=true)
+
+There is a strong correlation between inlet area and weight, with a few outliers being A330 Beluga XL and L-1011 TriStar
+
+For A330 Beluga XL, it seems that the craft operates at a lower speed and simply has greater weight to support larger cargo. More variable analysis is needed for the exact behavior of large cargo aircrafts.
+
+# Limitations
+
+Some calculations do not add to proper values mainly due to the fact that the paper relies on a single model of jet engines to cover a variety of jet engine types. A lot of the engine parameters are fixed despite aircrafts having different operating altutides, speed, and fuel consumption. The real efficiency of the aircraft has not been compared to the theoretical efficiency due to it being absent in the database.
+
+# Conclusion
+
+The data collected from the database has much more processing ahead. Careful analysis of existing aircraft can give insight into the design of future aircrafts and help business models target the right parameters for their aircrafts.
+
+---
+This project is avaliable at https://github.com/nopeless/jet-engine-analysis
